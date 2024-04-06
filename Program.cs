@@ -16,6 +16,7 @@ public class Program
             options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")!));
 
         builder.Services.AddTransient<IVehicleService, VehicleService>();
+        builder.Services.AddTransient<IClientService, ClientService>();
 
         builder.Services.AddControllers();
         
