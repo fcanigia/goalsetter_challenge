@@ -12,7 +12,6 @@
 
   <ItemGroup>
     <Folder Include="AppCore\Services\" />
-    <Folder Include="Domain\Entities\" />
     <Folder Include="Domain\Abstract\" />
     <Folder Include="Infrastructure\Context\" />
     <Folder Include="Infrastructure\Seeds\" />
