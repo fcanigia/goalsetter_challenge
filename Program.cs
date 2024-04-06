@@ -17,6 +17,7 @@ public class Program
 
         builder.Services.AddTransient<IVehicleService, VehicleService>();
         builder.Services.AddTransient<IClientService, ClientService>();
+        builder.Services.AddTransient<IRentalService, RentalService>();
 
         builder.Services.AddControllers();
         
