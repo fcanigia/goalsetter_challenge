@@ -1,5 +1,6 @@
 using GoalsetterChallenge.AppCore.Services;
 using GoalsetterChallenge.Domain.Entities;
+using GoalsetterChallenge.WebApi.Dto;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GoalsetterChallenge.WebApi.Controllers;
@@ -16,9 +17,9 @@ public class RentalController : ControllerBase
 
     [HttpPost]
     [ProducesResponseType(StatusCodes.Status201Created)]
-    public async Task<IActionResult> Create(Rental rental) 
+    public async Task<IActionResult> Create(RentalInDto rentalIn) 
     { 
-        var createdRental = await _rentalService.Create(rental);
+        var createdRental = await _rentalService.Create(rentalIn);
 
         return new ObjectResult(createdRental)
         {
