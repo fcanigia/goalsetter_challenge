@@ -19,9 +19,25 @@ Create a WebAPI for a car rental project. Please use SQL Server, NET6, and Entit
 
 ## Assumtions / implementation details
 - I will use only one project, layers will be folders
-- 
+- Wont have dto's, just retun entities
 
 ## Busines rules 
 - Vehicle: daily price > 0
 - Rental: StartDate >= now
 - Client: required client information
+
+## Todo list
+1. create entities
+2. create db context
+3. configure context
+4. seed data
+5. vehicle service (add and remove)
+6. vehicle controller (add and remove)
+7. check swagger configuration
+8. client service
+9. client controller
+10. rental service
+11. rental controller
+12. service extension
+13. migration extension
+14. test rental service
