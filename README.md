@@ -13,10 +13,13 @@ Create a WebAPI for a car rental project. Please use SQL Server, NET6, and Entit
 - A rental should have (at least) the following information: client, date range, vehicle, and price.
 
 ### Notes:
-Apply all the best practices that you would for a production-ready solution.
-Provide a GitHub link to your solution. It should run without any extra steps on any machine with VS2022 and SQL Server installed.
-Apply all the business rules you think should be part of the solution, like not allowing rentals to be created in the past.
+- Apply all the best practices that you would for a production-ready solution.
+- Provide a GitHub link to your solution. It should run without any extra steps on any machine with VS2022 and SQL Server installed.
+- Apply all the business rules you think should be part of the solution, like not allowing rentals to be created in the past.
 
 ## Assumtions / implementation details
 - I will use only one project, layers will be folders
+- 
+
+## Busines rules 
 - 
