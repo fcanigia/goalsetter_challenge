@@ -4,6 +4,7 @@ using GoalsetterChallenge.Infrastructure.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GoalsetterChallenge.Infrastructure.Migrations
 {
     [DbContext(typeof(RentalDbContext))]
-    partial class RentalDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240406184232_AddRemovedFieldToRental")]
+    partial class AddRemovedFieldToRental
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -40,9 +42,6 @@ namespace GoalsetterChallenge.Infrastructure.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
-                    b.Property<bool>("IsRemoved")
-                        .HasColumnType("bit");
-
                     b.Property<string>("LastName")
                         .IsRequired()
                         .HasMaxLength(100)
@@ -63,7 +62,6 @@ namespace GoalsetterChallenge.Infrastructure.Migrations
                             Id = 1,
                             EmailAddress = "JohnDoe@gmail.com",
                             FirstName = "John",
-                            IsRemoved = false,
                             LastName = "Doe",
                             PhoneNumber = "+54 9 11 3232 1212"
                         },
@@ -72,7 +70,6 @@ namespace GoalsetterChallenge.Infrastructure.Migrations
                             Id = 2,
                             EmailAddress = "JuanDoe@gmail.com",
                             FirstName = "Juan",
-                            IsRemoved = false,
                             LastName = "Doe",
                             PhoneNumber = "+54 9 11 3232 1213"
                         },
@@ -81,7 +78,6 @@ namespace GoalsetterChallenge.Infrastructure.Migrations
                             Id = 3,
                             EmailAddress = "PeterEod@gmail.com",
                             FirstName = "Peter",
-                            IsRemoved = false,
                             LastName = "Eod",
                             PhoneNumber = "+54 9 11 3232 1214"
                         });
@@ -123,27 +119,27 @@ namespace GoalsetterChallenge.Infrastructure.Migrations
                         {
                             Id = 1,
                             ClientId = 1,
-                            EndDate = new DateTime(2024, 4, 13, 15, 46, 13, 550, DateTimeKind.Local).AddTicks(9754),
+                            EndDate = new DateTime(2024, 4, 13, 15, 42, 31, 851, DateTimeKind.Local).AddTicks(8055),
                             IsRemoved = false,
-                            StartDate = new DateTime(2024, 4, 6, 15, 46, 13, 550, DateTimeKind.Local).AddTicks(9749),
+                            StartDate = new DateTime(2024, 4, 6, 15, 42, 31, 851, DateTimeKind.Local).AddTicks(8049),
                             VehicleId = 1
                         },
                         new
                         {
                             Id = 2,
                             ClientId = 2,
-                            EndDate = new DateTime(2024, 4, 13, 15, 46, 13, 550, DateTimeKind.Local).AddTicks(9758),
+                            EndDate = new DateTime(2024, 4, 13, 15, 42, 31, 851, DateTimeKind.Local).AddTicks(8059),
                             IsRemoved = false,
-                            StartDate = new DateTime(2024, 4, 6, 15, 46, 13, 550, DateTimeKind.Local).AddTicks(9757),
+                            StartDate = new DateTime(2024, 4, 6, 15, 42, 31, 851, DateTimeKind.Local).AddTicks(8059),
                             VehicleId = 6
                         },
                         new
                         {
                             Id = 3,
                             ClientId = 3,
-                            EndDate = new DateTime(2024, 4, 13, 15, 46, 13, 550, DateTimeKind.Local).AddTicks(9759),
+                            EndDate = new DateTime(2024, 4, 13, 15, 42, 31, 851, DateTimeKind.Local).AddTicks(8060),
                             IsRemoved = false,
-                            StartDate = new DateTime(2024, 4, 6, 15, 46, 13, 550, DateTimeKind.Local).AddTicks(9759),
+                            StartDate = new DateTime(2024, 4, 6, 15, 42, 31, 851, DateTimeKind.Local).AddTicks(8060),
                             VehicleId = 3
                         });
                 });

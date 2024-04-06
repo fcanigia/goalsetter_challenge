@@ -46,7 +46,9 @@ public class VehicleService : IVehicleService
 
             if (vehicleToDelete == null) { return false; }
 
-            _context.Vehicles.Remove(vehicleToDelete);
+            vehicleToDelete.IsRemoved = true;
+
+            _context.Vehicles.Update(vehicleToDelete);
             await _context.SaveChangesAsync();
 
             return true;

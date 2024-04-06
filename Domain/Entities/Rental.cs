@@ -11,6 +11,7 @@ public class Rental
     public int VehicleId { get; set; }
     public DateTime StartDate { get; set; }
     public DateTime EndDate { get; set; }
+    public bool IsRemoved { get; set; } = false;
 
     [NotMapped]
     public double  Price { get; set; }

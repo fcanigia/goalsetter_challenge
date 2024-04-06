@@ -41,3 +41,8 @@ Create a WebAPI for a car rental project. Please use SQL Server, NET6, and Entit
 12. service extension
 13. migration extension
 14. test rental service
+
+
+## Misses
+- gets should return only not removed
+- 

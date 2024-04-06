@@ -49,7 +49,9 @@ public class ClientService : IClientService
                 return false;
             }
 
-            _context.Clients.Remove(clientToDelete);
+            clientToDelete.IsRemoved = true;
+
+            _context.Clients.Update(clientToDelete);
             await _context.SaveChangesAsync();
 
             return true;
