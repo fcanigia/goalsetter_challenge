@@ -26,6 +26,8 @@ public class RentalDbContext : DbContext
             .WithMany()
             .HasForeignKey(r => r.ClientId);
 
+        modelBuilder.Seed();
+
         base.OnModelCreating(modelBuilder);
     }
 }
