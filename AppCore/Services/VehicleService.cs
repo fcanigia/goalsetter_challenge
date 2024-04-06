@@ -1,6 +1,7 @@
 ﻿using GoalsetterChallenge.Domain.Abstract;
 using GoalsetterChallenge.Domain.Entities;
 using GoalsetterChallenge.Infrastructure.Context;
+using GoalsetterChallenge.Tools.CustomExceptions;
 using Microsoft.EntityFrameworkCore;
 
 namespace GoalsetterChallenge.AppCore.Services;
@@ -19,6 +20,14 @@ public class VehicleService : IVehicleService
         var vehicles = await _context.Vehicles.ToListAsync();
 
         return vehicles;
+    }
+
+    public async Task<Vehicle> GetById(int vehicleId)
+    {
+        var vehicle = await _context.Vehicles.FindAsync(vehicleId) 
+            ?? throw new NotFoundException($"Vehicle with ID {vehicleId} not found.");
+
+        return vehicle;
     }
 
     public async Task<Vehicle> Add(Vehicle vehicle)
@@ -42,7 +51,7 @@ public class VehicleService : IVehicleService
     {
         try
         {
-            var vehicleToDelete = await _context.Vehicles.FindAsync(vehicleId);
+            var vehicleToDelete = await GetById(vehicleId);
 
             if (vehicleToDelete == null) { return false; }
 

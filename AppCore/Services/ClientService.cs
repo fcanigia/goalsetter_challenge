@@ -1,6 +1,7 @@
 ﻿using GoalsetterChallenge.Domain.Abstract;
 using GoalsetterChallenge.Domain.Entities;
 using GoalsetterChallenge.Infrastructure.Context;
+using GoalsetterChallenge.Tools.CustomExceptions;
 using Microsoft.EntityFrameworkCore;
 
 namespace GoalsetterChallenge.AppCore.Services;
@@ -19,6 +20,14 @@ public class ClientService : IClientService
         var clients = await _context.Clients.ToListAsync();
 
         return clients;
+    }
+
+    public async Task<Client> GetById(int clientId)
+    {
+        var client = await _context.Clients.FindAsync(clientId) 
+            ?? throw new NotFoundException($"Client with ID {clientId} not found."); 
+
+        return client;
     }
 
     public async Task<Client> Add(Client client)

@@ -6,4 +6,5 @@ public interface IClientService
     Task<Client> Add(Client client);
     Task<List<Client>> GetAll();
     Task<bool> Remove(int clientId);
+    Task<Client> GetById(int clientId);
 }

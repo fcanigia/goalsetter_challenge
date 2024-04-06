@@ -6,4 +6,5 @@ public interface IVehicleService
     Task<List<Vehicle>> GetAll();
     Task<Vehicle> Add(Vehicle vehicle);
     Task<bool> Remove(int vehicleId);
+    Task<Vehicle> GetById(int vehicleId);
 }
