@@ -24,7 +24,9 @@ Create a WebAPI for a car rental project. Please use SQL Server, NET6, and Entit
 ## Busines rules 
 - Vehicle: daily price > 0
 - Rental: StartDate >= now
-- Client: required client information
+- Rental: EndDate > StartDate
+- Rental: StartDate == EndDate
+- Client: required client s
 
 ## Todo list
 1. create entities
@@ -45,4 +47,4 @@ Create a WebAPI for a car rental project. Please use SQL Server, NET6, and Entit
 
 ## Misses
 - gets should return only not removed
-- 
+- custom exception middleware handler, 
