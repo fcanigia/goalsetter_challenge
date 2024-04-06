@@ -20,7 +20,6 @@
     <Folder Include="AppCore\Services\" />
     <Folder Include="Domain\Abstract\" />
     <Folder Include="Infrastructure\Migrations\" />
-    <Folder Include="Infrastructure\Configuration\" />
     <Folder Include="Infrastructure\Seeds\" />
   </ItemGroup>
 
