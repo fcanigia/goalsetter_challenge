@@ -14,7 +14,7 @@ public class ClientController : ControllerBase
         _clientService = clientService;
     }
 
-    [HttpPost]
+    [HttpPost(Name = "Create new client")]
     [ProducesResponseType(StatusCodes.Status201Created)]
     public async Task<IActionResult> Add(Client client) 
     { 
@@ -26,7 +26,7 @@ public class ClientController : ControllerBase
         };
     }
 
-    [HttpGet]
+    [HttpGet(Name = "Get all clients")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<IActionResult> GetAll()
     {
@@ -35,7 +35,7 @@ public class ClientController : ControllerBase
         return Ok(clients);
     }
 
-    [HttpDelete]
+    [HttpDelete(Name = "Remove a client")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<IActionResult> Remove(int clientId)
     {

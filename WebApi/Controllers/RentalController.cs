@@ -15,7 +15,7 @@ public class RentalController : ControllerBase
         _rentalService = rentalService;
     }
 
-    [HttpPost]
+    [HttpPost(Name = "Creates a new rental")]
     [ProducesResponseType(StatusCodes.Status201Created)]
     public async Task<IActionResult> Create(RentalInDto rentalIn) 
     { 
@@ -27,7 +27,7 @@ public class RentalController : ControllerBase
         };
     }
 
-    [HttpGet]
+    [HttpGet(Name = "Get all rentals")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<IActionResult> GetAll()
     {
@@ -36,7 +36,7 @@ public class RentalController : ControllerBase
         return Ok(rentals);
     }
 
-    [HttpDelete]
+    [HttpDelete(Name = "Removes a rental")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<IActionResult> Remove(int rentalId)
     {

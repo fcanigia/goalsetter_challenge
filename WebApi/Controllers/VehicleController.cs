@@ -14,7 +14,7 @@ public class VehicleController : ControllerBase
         _vehicleService = vehicleService;
     }
 
-    [HttpPost]
+    [HttpPost(Name = "Add new vehicle")]
     [ProducesResponseType(StatusCodes.Status201Created)]
     public async Task<IActionResult> Add(Vehicle vehicle) 
     { 
@@ -26,7 +26,7 @@ public class VehicleController : ControllerBase
         };
     }
 
-    [HttpGet]
+    [HttpGet(Name = "Get all vehicles")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<IActionResult> GetAll()
     {
@@ -35,7 +35,7 @@ public class VehicleController : ControllerBase
         return Ok(vehicles);
     }
 
-    [HttpDelete]
+    [HttpDelete(Name = "Remove a vehicle")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<IActionResult> Remove(int vehicleId)
     {
