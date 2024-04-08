@@ -77,12 +77,22 @@ public class RentalService : IRentalService
                 throw new ValidationException($"Client with Id {rental.ClientId} has already booked for these dates");
             }
 
+            double rentalPrice;
+
+            TimeSpan difference = rental.EndDate - rental.StartDate;
+            int daysBetween = difference.Days;
+
+            if (daysBetween == 0) { rentalPrice = vehicle.DailyPrice; }
+
+            rentalPrice = vehicle.DailyPrice * daysBetween;
+
             var newRental = new Rental()
             {
                 ClientId = client.Id,
                 VehicleId = vehicle.Id,
                 StartDate = rental.StartDate,
-                EndDate = rental.EndDate
+                EndDate = rental.EndDate,
+                Price = rentalPrice
             };
 
             _context.Rentals.Add(newRental);
