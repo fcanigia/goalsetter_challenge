@@ -24,7 +24,10 @@ public class RentalService : IRentalService
 
     public async Task<List<Rental>> GetAll()
     {
-        var rentals = await _context.Rentals.ToListAsync();
+        var rentals = await _context.Set<Rental>()
+            .Include(r => r.Vehicle)
+            .Include(r => r.Client)
+            .ToListAsync();
 
         return rentals;
     }
@@ -47,6 +50,31 @@ public class RentalService : IRentalService
             if (client.IsRemoved)
             {
                 throw new ValidationException($"Client with Id {client.Id} was removed from the Rental and cannot rent new cars");
+            }
+
+            var vehicleInUseForDatePeriod = await _context.Set<Rental>()
+                .Where(r => r.IsRemoved == false
+                    && r.VehicleId == rental.VehicleId
+                    && (rental.StartDate >= r.StartDate && rental.StartDate <= r.EndDate
+                    || rental.EndDate >= r.StartDate && rental.EndDate <= r.EndDate))
+                .AnyAsync();
+
+            if (vehicleInUseForDatePeriod)
+            {
+                throw new ValidationException($"Vehicle with Id {rental.VehicleId} is not available for the selected dates");
+            }
+
+            var clientBookedForSamePeriod = await _context.Set<Rental>()
+                .Where(r => r.IsRemoved == false
+                    && r.ClientId == rental.ClientId
+                    && (rental.StartDate >= r.StartDate && rental.StartDate <= r.EndDate
+                    || rental.EndDate >= r.StartDate && rental.EndDate <= r.EndDate))
+                .AnyAsync();
+
+            // Could specify the error, with the overlaped period as message
+            if (clientBookedForSamePeriod)
+            {
+                throw new ValidationException($"Client with Id {rental.ClientId} has already booked for these dates");
             }
 
             var newRental = new Rental()
