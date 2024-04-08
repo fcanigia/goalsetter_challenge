@@ -90,7 +90,6 @@ public class RentalService : IRentalService
         await _context.SaveChangesAsync();
 
         return newRental;
-
     }
 
     public async Task<bool> Remove(int rentalId)
@@ -120,7 +119,10 @@ public class RentalService : IRentalService
 
     private static void ValidateDates(RentalInDto rental)
     {
-        if (rental.StartDate == rental.EndDate)
+        if (rental.StartDate.Date == rental.EndDate.Date 
+            && rental.StartDate.Hour == rental.EndDate.Hour
+            && rental.StartDate.Minute == rental.EndDate.Minute
+            && rental.StartDate.Second == rental.EndDate.Second)
         {
             throw new ValidationException("StartDate and EndDate could not be the same");
         }

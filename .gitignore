@@ -5,3 +5,5 @@
 /.vs
 /obj
 /bin/Debug/net6.0
+/tests/Rental.UnitTests/obj
+/tests/Rental.UnitTests/bin/Debug/net6.0
