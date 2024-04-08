@@ -34,102 +34,88 @@ public class RentalService : IRentalService
 
     public async Task<Rental> Create(RentalInDto rental)
     {
-        try
+
+        ValidateDates(rental);
+
+        var vehicle = await _vehicleService.GetById(rental.VehicleId);
+
+        if (vehicle.IsRemoved)
         {
-            ValidateDates(rental);
-
-            var vehicle = await _vehicleService.GetById(rental.VehicleId);
-
-            if (vehicle.IsRemoved)
-            {
-                throw new ValidationException($"Vehicle with Id {vehicle.Id} was removed from the Rental and cannot be selected");
-            }
-
-            var client = await _clientService.GetById(rental.ClientId);
-
-            if (client.IsRemoved)
-            {
-                throw new ValidationException($"Client with Id {client.Id} was removed from the Rental and cannot rent new cars");
-            }
-
-            var vehicleInUseForDatePeriod = await _context.Set<Rental>()
-                .Where(r => r.IsRemoved == false
-                    && r.VehicleId == rental.VehicleId
-                    && (rental.StartDate >= r.StartDate && rental.StartDate <= r.EndDate
-                    || rental.EndDate >= r.StartDate && rental.EndDate <= r.EndDate))
-                .AnyAsync();
-
-            if (vehicleInUseForDatePeriod)
-            {
-                throw new ValidationException($"Vehicle with Id {rental.VehicleId} is not available for the selected dates");
-            }
-
-            var clientBookedForSamePeriod = await _context.Set<Rental>()
-                .Where(r => r.IsRemoved == false
-                    && r.ClientId == rental.ClientId
-                    && (rental.StartDate >= r.StartDate && rental.StartDate <= r.EndDate
-                    || rental.EndDate >= r.StartDate && rental.EndDate <= r.EndDate))
-                .AnyAsync();
-
-            // Could specify the error, with the overlaped period as message
-            if (clientBookedForSamePeriod)
-            {
-                throw new ValidationException($"Client with Id {rental.ClientId} has already booked for these dates");
-            }
-
-            double rentalPrice;
-
-            TimeSpan difference = rental.EndDate - rental.StartDate;
-            int daysBetween = difference.Days;
-
-            if (daysBetween == 0) { rentalPrice = vehicle.DailyPrice; }
-
-            rentalPrice = vehicle.DailyPrice * daysBetween;
-
-            var newRental = new Rental()
-            {
-                ClientId = client.Id,
-                VehicleId = vehicle.Id,
-                StartDate = rental.StartDate,
-                EndDate = rental.EndDate,
-                Price = rentalPrice
-            };
-
-            _context.Rentals.Add(newRental);
-
-            await _context.SaveChangesAsync();
-
-            return newRental;
+            throw new ValidationException($"Vehicle with Id {vehicle.Id} was removed from the Rental and cannot be selected");
         }
-        catch (Exception)
+
+        var client = await _clientService.GetById(rental.ClientId);
+
+        if (client.IsRemoved)
         {
-
-            throw;
+            throw new ValidationException($"Client with Id {client.Id} was removed from the Rental and cannot rent new cars");
         }
+
+        var vehicleInUseForDatePeriod = await _context.Set<Rental>()
+            .Where(r => r.IsRemoved == false
+                && r.VehicleId == rental.VehicleId
+                && (rental.StartDate >= r.StartDate && rental.StartDate <= r.EndDate
+                || rental.EndDate >= r.StartDate && rental.EndDate <= r.EndDate))
+            .AnyAsync();
+
+        if (vehicleInUseForDatePeriod)
+        {
+            throw new ValidationException($"Vehicle with Id {rental.VehicleId} is not available for the selected dates");
+        }
+
+        var clientBookedForSamePeriod = await _context.Set<Rental>()
+            .Where(r => r.IsRemoved == false
+                && r.ClientId == rental.ClientId
+                && (rental.StartDate >= r.StartDate && rental.StartDate <= r.EndDate
+                || rental.EndDate >= r.StartDate && rental.EndDate <= r.EndDate))
+            .AnyAsync();
+
+        // Could specify the error, with the overlaped period as message
+        if (clientBookedForSamePeriod)
+        {
+            throw new ValidationException($"Client with Id {rental.ClientId} has already booked for these dates");
+        }
+
+        var newRental = new Rental()
+        {
+            ClientId = client.Id,
+            VehicleId = vehicle.Id,
+            StartDate = rental.StartDate,
+            EndDate = rental.EndDate,
+            Price = GetRentalPrice(rental.StartDate, rental.EndDate, vehicle.DailyPrice)
+        };
+
+        _context.Rentals.Add(newRental);
+
+        await _context.SaveChangesAsync();
+
+        return newRental;
+
     }
-    
+
     public async Task<bool> Remove(int rentalId)
     {
-        try
+        var rentalToRemove = await _context.Rentals.FindAsync(rentalId);
+
+        if (rentalToRemove == null)
         {
-            var rentalToRemove = await _context.Rentals.FindAsync(rentalId);
-
-            if (rentalToRemove == null)
-            {
-                return false;
-            }
-
-            rentalToRemove.IsRemoved = true;
-            await _context.SaveChangesAsync();
-
-            return true;
-
+            return false;
         }
-        catch (Exception)
-        {
 
-            throw;
-        }
+        rentalToRemove.IsRemoved = true;
+        await _context.SaveChangesAsync();
+
+        return true;
+    }
+
+    private static double GetRentalPrice(DateTime startDate, DateTime endDate, double dailyPrice)
+    {
+        TimeSpan difference = endDate - startDate;
+        int daysBetween = difference.Days;
+
+        if (daysBetween == 0) { return dailyPrice; }
+
+        return dailyPrice * daysBetween;
     }
 
     private static void ValidateDates(RentalInDto rental)
