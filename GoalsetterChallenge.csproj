@@ -18,7 +18,6 @@
 
   <ItemGroup>
     <Folder Include="Infrastructure\Migrations\" />
-    <Folder Include="Infrastructure\Seeds\" />
   </ItemGroup>
 
 </Project>

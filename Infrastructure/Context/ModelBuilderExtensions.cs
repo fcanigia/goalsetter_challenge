@@ -39,9 +39,15 @@ public static class ModelBuilderExtensions
     {
         modelBuilder.Entity<Rental>()
             .HasData(
-                new Rental() { Id = 1, ClientId = 1, VehicleId = 1, StartDate = DateTime.Now, EndDate = DateTime.Now.AddDays(7) },
-                new Rental() { Id = 2, ClientId = 2, VehicleId = 6, StartDate = DateTime.Now, EndDate = DateTime.Now.AddDays(7) },
-                new Rental() { Id = 3, ClientId = 3, VehicleId = 3, StartDate = DateTime.Now, EndDate = DateTime.Now.AddDays(7) }
+                new Rental() { Id = 1, ClientId = 1, VehicleId = 1, StartDate = DateTime.Now, EndDate = DateTime.Now.AddDays(7), Price = 70.07 },
+                new Rental() { Id = 2, ClientId = 2, VehicleId = 6, StartDate = DateTime.Now, EndDate = DateTime.Now.AddDays(7), Price = 154 },
+                new Rental() { Id = 3, ClientId = 3, VehicleId = 3, StartDate = DateTime.Now, EndDate = DateTime.Now.AddDays(7), Price = 105 },
+                new Rental() { Id = 4, ClientId = 1, VehicleId = 1, StartDate = DateTime.Parse("2024-05-01"), EndDate = DateTime.Parse("2024-05-10"), Price =  100.10},
+                new Rental() { Id = 5, ClientId = 2, VehicleId = 6, StartDate = DateTime.Parse("2024-05-01"), EndDate = DateTime.Parse("2024-05-10"), Price = 220 },
+                new Rental() { Id = 6, ClientId = 3, VehicleId = 3, StartDate = DateTime.Parse("2024-05-01"), EndDate = DateTime.Parse("2024-05-10"), Price = 150 },
+                new Rental() { Id = 7, ClientId = 1, VehicleId = 1, StartDate = DateTime.Parse("2024-05-12"), EndDate = DateTime.Parse("2024-05-17"), Price = 60.06 },
+                new Rental() { Id = 8, ClientId = 2, VehicleId = 6, StartDate = DateTime.Parse("2024-05-11"), EndDate = DateTime.Parse("2024-05-18"), Price = 176 },
+                new Rental() { Id = 9, ClientId = 3, VehicleId = 3, StartDate = DateTime.Parse("2024-05-13"), EndDate = DateTime.Parse("2024-05-19"), Price = 105 }
             );
     }
 }

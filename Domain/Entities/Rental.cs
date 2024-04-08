@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-
-namespace GoalsetterChallenge.Domain.Entities;
+﻿namespace GoalsetterChallenge.Domain.Entities;
 
 public class Rental
 {
@@ -12,7 +10,5 @@ public class Rental
     public DateTime StartDate { get; set; }
     public DateTime EndDate { get; set; }
     public bool IsRemoved { get; set; } = false;
-
-    [NotMapped]
-    public double  Price { get; set; }
+    public double Price { get; set; }
 }
