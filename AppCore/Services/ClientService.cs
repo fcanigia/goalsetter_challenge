@@ -32,43 +32,27 @@ public class ClientService : IClientService
 
     public async Task<Client> Add(Client client)
     {
-        try
-        {
-            _context.Clients.Add(client);
+        _context.Clients.Add(client);
 
-            await _context.SaveChangesAsync();
+        await _context.SaveChangesAsync();
 
-            return client;
-        }
-        catch (Exception)
-        {
-
-            throw;
-        }
+        return client;
     }
 
     public async Task<bool> Remove(int clientId)
     {
-        try
+        var clientToDelete = await _context.Clients.FindAsync(clientId);
+
+        if (clientToDelete == null)
         {
-            var clientToDelete = await _context.Clients.FindAsync(clientId);
-
-            if (clientToDelete == null)
-            {
-                return false;
-            }
-
-            clientToDelete.IsRemoved = true;
-
-            _context.Clients.Update(clientToDelete);
-            await _context.SaveChangesAsync();
-
-            return true;
+            return false;
         }
-        catch (Exception)
-        {
 
-            throw;
-        }
+        clientToDelete.IsRemoved = true;
+
+        _context.Clients.Update(clientToDelete);
+        await _context.SaveChangesAsync();
+
+        return true;
     }
 }

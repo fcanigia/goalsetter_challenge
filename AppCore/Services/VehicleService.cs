@@ -32,40 +32,26 @@ public class VehicleService : IVehicleService
 
     public async Task<Vehicle> Add(Vehicle vehicle)
     {
-        try
-        {
-            _context.Vehicles.Add(vehicle);
+        if (vehicle.DailyPrice <= 0) { throw new ValidationException("Vehicle daily price cannot be 0 or a negative value"); }
+            
+        _context.Vehicles.Add(vehicle);
 
-            await _context.SaveChangesAsync();
+        await _context.SaveChangesAsync();
 
-            return vehicle;
-        }
-        catch (Exception)
-        {
-
-            throw;
-        }
+        return vehicle;
     }
 
     public async Task<bool> Remove(int vehicleId)
     {
-        try
-        {
-            var vehicleToDelete = await GetById(vehicleId);
+        var vehicleToDelete = await GetById(vehicleId);
 
-            if (vehicleToDelete == null) { return false; }
+        if (vehicleToDelete == null) { return false; }
 
-            vehicleToDelete.IsRemoved = true;
+        vehicleToDelete.IsRemoved = true;
 
-            _context.Vehicles.Update(vehicleToDelete);
-            await _context.SaveChangesAsync();
+        _context.Vehicles.Update(vehicleToDelete);
+        await _context.SaveChangesAsync();
 
-            return true;
-        }
-        catch (Exception)
-        {
-
-            throw;
-        }
+        return true;
     }
 }
