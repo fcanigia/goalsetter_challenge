@@ -34,18 +34,15 @@ public class RentalService : IRentalService
 
     public async Task<Rental> Create(RentalInDto rental)
     {
-
         ValidateDates(rental);
 
         var vehicle = await _vehicleService.GetById(rental.VehicleId);
-
         if (vehicle.IsRemoved)
         {
             throw new ValidationException($"Vehicle with Id {vehicle.Id} was removed from the Rental and cannot be selected");
         }
 
         var client = await _clientService.GetById(rental.ClientId);
-
         if (client.IsRemoved)
         {
             throw new ValidationException($"Client with Id {client.Id} was removed from the Rental and cannot rent new cars");
